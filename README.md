@@ -19,4 +19,8 @@
     - The run "docker run -d --name mycontainer -p 8000:8000 distancecalcapp" to start the application
     - Go to "http://127.0.0.1:8000/docs" on the web browser to open the swagger page for the application
     - Input the JSON in the above formart into the "/distance" endpoint.
+  
+  - Alternatively, to get the image from dockerHub with no need for an api key, run
+    - "docker pull ope079/distancecalcapp"
+    - "docker run -d --name mycontainer -p 8000:8000 ope079/distancecalcapp" to start the container.
 

@@ -31,10 +31,15 @@ unit: unit
 # Incorrect entry for any field will return an error
 # And returns JSON containing the origin location, destination distance and duration of travel
 @app.post("/distance/")
-async def distance(request: Request, origin: str = Body("Leeds") , destination: str = Body("London"), transit_mode: str = Body("Bicycle"), unit: str = Body("metric")):
+async def distance(request: Request, origin: str = Body("Leeds") , destination: str = Body("London"), 
+                   transit_mode: str = Body("Bicycle"), unit: str = Body("metric")):
     
-    now = datetime.now()
+    if transit_mode.lower() not in ['bicycle'.lower(), 'car'.lower(), 'motorcycle'.lower(), 'tram'.lower(), 'bus'.lower(), 'train'.lower(), 'coach'.lower()] \
+        or unit.lower()  not in ['metric'.lower(), 'imperial'.lower()]:
+        return {"Error" : "Wrong Value Entered. Please check all your entries."}
+    else:
+        now = datetime.now()
 
-    distance_result = gmaps.distance_matrix(origins=origin, destinations=destination, transit_mode=transit_mode, units=unit, departure_time= now)
+        distance_result = gmaps.distance_matrix(origins=origin, destinations=destination, transit_mode=transit_mode, units=unit, departure_time= now)
 
-    return {"distance" : distance_result}
+        return {"distance" : distance_result}
